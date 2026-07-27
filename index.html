@@ -326,10 +326,10 @@ const STORY = [
     "The aliens grow faster, more relentless.",
     "",
     "A transmission crackles through static:",
-    '"The Overlord knows you\'re here, human."',
+    `"The Overlord knows you're here, human."`,
     "",
-    '"Good," you reply.',
-    '"Tell it I\'m coming."',
+    `"Good," you reply.`,
+    `"Tell it I'm coming."`,
     "",
     "[ PRESS ENTER OR SPACE ]",
   ],
@@ -788,7 +788,7 @@ function drawTitle() {
   if (blink) strokeText('[ PRESS ENTER OR SPACE ]', W / 2, 430, 18, '#000033', C.white);
 
   fillText('CONTROLS: WASD / ARROWS = MOVE   SPACE / Z = SHOOT', W / 2, 490, 14, C.gray);
-  fillText('Collect  + for health   ✦ for double-shot', W / 2, 515, 14, C.gray);
+  fillText('Collect + for health   ✦ for double-shot', W / 2, 515, 14, C.gray);
   fillText('Score as many points as possible!', W / 2, 540, 13, '#556688');
 }
 
@@ -860,7 +860,6 @@ function drawLose() {
 // ─── Loop ─────────────────────────────────────────────────────────────────────
 let lastTime = 0;
 function loop(ts) {
-  const dt = Math.min((ts - lastTime) / 16.67, 3); // cap at 3× frame
   lastTime = ts;
   update();
   draw();
