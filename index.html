@@ -74,7 +74,7 @@ const C = {
 // ─── Audio ───────────────────────────────────────────────────────────────────
 let audioCtx = null;
 function getAudio() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (!audioCtx) audioCtx = new AudioContext();
   return audioCtx;
 }
 function beep(freq, duration, vol = 0.15, type = 'square') {
@@ -788,7 +788,7 @@ function drawTitle() {
   if (blink) strokeText('[ PRESS ENTER OR SPACE ]', W / 2, 430, 18, '#000033', C.white);
 
   fillText('CONTROLS: WASD / ARROWS = MOVE   SPACE / Z = SHOOT', W / 2, 490, 14, C.gray);
-  fillText('Collect + for health   ✦ for double-shot', W / 2, 515, 14, C.gray);
+  fillText('Collect GREEN CROSS for health   YELLOW STAR for double-shot', W / 2, 515, 14, C.gray);
   fillText('Score as many points as possible!', W / 2, 540, 13, '#556688');
 }
 
