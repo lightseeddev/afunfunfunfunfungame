@@ -93,7 +93,11 @@ function sfxShoot()    { beep(880, 0.08, 0.1, 'square'); }
 function sfxHit()      { beep(220, 0.12, 0.2, 'sawtooth'); }
 function sfxExplode()  { beep(100, 0.25, 0.25, 'sawtooth'); beep(60, 0.35, 0.2, 'sawtooth'); }
 function sfxPickup()   { beep(660, 0.05, 0.1); beep(880, 0.05, 0.1); }
-function sfxBossDie()  { for (let i=0;i<5;i++) setTimeout(()=>beep(80+i*30,0.4,0.3,'sawtooth'),i*80); }
+function sfxBossDie() {
+  for (let i = 0; i < 5; i++) {
+    setTimeout(() => beep(80 + i * 30, 0.4, 0.3, 'sawtooth'), i * 80);
+  }
+}
 
 // ─── Input ───────────────────────────────────────────────────────────────────
 const keys = {};
@@ -326,10 +330,10 @@ const STORY = [
     "The aliens grow faster, more relentless.",
     "",
     "A transmission crackles through static:",
-    `"The Overlord knows you're here, human."`,
+    '"The Overlord knows you\'re here, human."',
     "",
-    `"Good," you reply.`,
-    `"Tell it I'm coming."`,
+    '"Good," you reply.',
+    '"Tell it I\'m coming."',
     "",
     "[ PRESS ENTER OR SPACE ]",
   ],
@@ -375,7 +379,9 @@ const WIN_LINES = [
   "— MISSION COMPLETE —",
 ];
 
-// ─── Game state ───────────────────────────────────────────────────────────────
+// Player is kept in the left half so enemies approach from the right
+const PLAYER_MAX_X_RATIO = 0.5;
+
 // States: TITLE | STORY | PLAYING | LOSE | WIN
 let state = 'TITLE';
 let wave  = 0;         // 1-4
@@ -480,7 +486,7 @@ function update() {
     if (keys['ArrowDown']  || keys['KeyS']) p.y += p.speed;
     if (keys['ArrowLeft']  || keys['KeyA']) p.x -= p.speed;
     if (keys['ArrowRight'] || keys['KeyD']) p.x += p.speed;
-    p.x = clamp(p.x, 0, W * 0.5 - p.w);
+    p.x = clamp(p.x, 0, W * PLAYER_MAX_X_RATIO - p.w);
     p.y = clamp(p.y, 0, H - p.h);
 
     if (p.invTimer > 0) p.invTimer--;
@@ -603,7 +609,7 @@ function checkCollisions() {
   if (!p || p.dead) return;
 
   // Player bullets vs enemies
-  outer: for (let bi = pBullets.length - 1; bi >= 0; bi--) {
+  bulletLoop: for (let bi = pBullets.length - 1; bi >= 0; bi--) {
     const b = pBullets[bi];
     for (let ei = enemies.length - 1; ei >= 0; ei--) {
       const e = enemies[ei];
@@ -630,7 +636,7 @@ function checkCollisions() {
           }
           enemies.splice(ei, 1);
         }
-        continue outer;
+        continue bulletLoop;
       }
     }
   }
